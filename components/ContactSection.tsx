@@ -3,13 +3,14 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Phone, Mail, CheckCircle2 } from 'lucide-react'
-import { Reveal, GoldRule } from './AnimationUtils'
+import { Phone, Mail, CheckCircle2, ShieldCheck, Lock, Building2 } from 'lucide-react'
+import { Reveal } from './AnimationUtils'
 
 interface FormData {
   name: string
   email: string
   phone: string
+  jurisdiction: string
   requirements: string
 }
 
@@ -25,331 +26,209 @@ export default function ContactSection() {
 
   const onSubmit = async (data: FormData) => {
     setLoading(true)
-    // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1000))
     setLoading(false)
     setSubmitted(true)
   }
 
   return (
-    <section
-      id="contact"
-      className="py-24 md:py-32"
-      style={{ background: 'var(--color-black)' }}
-    >
+    <section id="contact" className="py-24 md:py-32 bg-black border-t border-border relative">
       <div className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           
-          {/* Left — Founder Profile */}
+          {/* Left — Founder Profile & Sovereign Trust */}
           <div>
             <Reveal>
-              <p className="eyebrow mb-6" style={{ letterSpacing: '0.25em' }}>
-                ESTABLISH LEADERSHIP OFFICE SUPPORT
-              </p>
-              <h2
-                className="font-playfair section-title"
-                style={{
-                  fontSize: 'clamp(28px, 3.5vw, 40px)',
-                  fontWeight: 600,
-                  color: 'var(--color-white)',
-                  marginBottom: 16,
-                  lineHeight: 1.2,
-                }}
-              >
+              <p className="eyebrow mb-4">ESTABLISH LEADERSHIP OFFICE SUPPORT</p>
+              <h2 className="font-playfair text-3xl md:text-5xl text-white font-semibold leading-tight mb-4">
                 Partner with Thalaimai 360
               </h2>
-              <p
-                className="font-inter"
-                style={{
-                  fontSize: 17,
-                  color: 'var(--color-muted)',
-                  lineHeight: 1.75,
-                  marginBottom: 32,
-                }}
-              >
-                Bring professional, structured governance excellence to your constituency.
+              <p className="text-muted text-base md:text-lg font-inter leading-relaxed mb-8">
+                Bring professional, structured governance excellence to your constituency and legislative mandate.
               </p>
             </Reveal>
 
-            {/* Gold Divider */}
-            <div
-              style={{
-                height: 1,
-                background: 'var(--color-gold-dim)',
-                marginBottom: 32,
-              }}
-            />
+            {/* Strict Neutrality & NDA Notice Box */}
+            <div className="p-4 rounded border border-red/30 bg-red/5 mb-8 flex items-start gap-4">
+              <Lock className="text-red flex-shrink-0 mt-1" size={20} />
+              <div>
+                <h4 className="text-xs uppercase tracking-wider font-semibold text-white font-inter mb-1">
+                  Strict Confidentiality & Non-Disclosure Assurance
+                </h4>
+                <p className="text-xs text-muted font-inter leading-relaxed">
+                  All consultations, demographic profiling, and advisory communications are conducted under strict non-disclosure protocols and complete political neutrality.
+                </p>
+              </div>
+            </div>
 
-            {/* Founder Card */}
-            <div
-              style={{
-                background: 'var(--color-surface)',
-                border: '1px solid var(--color-border)',
-                borderRadius: 4,
-                padding: '28px 32px',
-              }}
-            >
-              <h3
-                className="font-inter"
-                style={{
-                  fontSize: 18,
-                  fontWeight: 600,
-                  color: 'var(--color-white)',
-                  marginBottom: 4,
-                }}
-              >
-                Srikala Sukumar
-              </h3>
-              <p
-                className="font-inter"
-                style={{
-                  fontSize: 14,
-                  color: 'var(--color-gold)',
-                  marginBottom: 20,
-                }}
-              >
-                Founder, Thalaimai 360
+            {/* Founder Profile Card */}
+            <div className="p-6 md:p-8 rounded border border-border bg-surface relative overflow-hidden space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-full bg-red/20 border border-red flex items-center justify-center text-red font-playfair font-bold text-xl">
+                  SS
+                </div>
+                <div>
+                  <h3 className="font-inter text-xl font-semibold text-white">
+                    Srikala Sukumar
+                  </h3>
+                  <p className="text-xs text-red font-inter font-medium tracking-wider uppercase">
+                    Founder & Principal Governance Strategist, Thalaimai 360
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-xs text-muted font-inter leading-relaxed italic border-l-2 border-red pl-4">
+                "Governance is not merely winning an election; it is the daily, rigorous institutional work of transforming electoral mandates into measurable public trust."
               </p>
 
-              {/* Contact Items */}
-              <div className="flex flex-col gap-4">
+              <div className="space-y-3 pt-2 border-t border-border/60">
                 <a
                   href="tel:+919940965032"
-                  className="flex items-center gap-3 group"
-                  style={{ textDecoration: 'none' }}
-                  onMouseEnter={(e) => {
-                    const icon = e.currentTarget.querySelector('svg') as SVGElement
-                    const text = e.currentTarget.querySelector('span') as HTMLElement
-                    if (icon) icon.style.color = 'var(--color-gold)'
-                    if (text) text.style.color = 'var(--color-white)'
-                  }}
-                  onMouseLeave={(e) => {
-                    const icon = e.currentTarget.querySelector('svg') as SVGElement
-                    const text = e.currentTarget.querySelector('span') as HTMLElement
-                    if (icon) icon.style.color = 'var(--color-muted)'
-                    if (text) text.style.color = 'var(--color-muted)'
-                  }}
+                  className="flex items-center gap-3 text-sm text-muted hover:text-white font-inter transition-colors"
                 >
-                  <Phone
-                    size={16}
-                    style={{ color: 'var(--color-muted)', transition: 'color 0.2s ease', flexShrink: 0 }}
-                  />
-                  <span
-                    className="font-inter"
-                    style={{
-                      fontSize: 15,
-                      color: 'var(--color-muted)',
-                      transition: 'color 0.2s ease',
-                    }}
-                  >
-                    +91 9940965032
-                  </span>
+                  <Phone size={16} className="text-red" />
+                  <span>+91 9940965032</span>
                 </a>
 
                 <a
                   href="mailto:thalaimai360@gmail.com"
-                  className="flex items-center gap-3 group"
-                  style={{ textDecoration: 'none' }}
-                  onMouseEnter={(e) => {
-                    const icon = e.currentTarget.querySelector('svg') as SVGElement
-                    const text = e.currentTarget.querySelector('span') as HTMLElement
-                    if (icon) icon.style.color = 'var(--color-gold)'
-                    if (text) text.style.color = 'var(--color-white)'
-                  }}
-                  onMouseLeave={(e) => {
-                    const icon = e.currentTarget.querySelector('svg') as SVGElement
-                    const text = e.currentTarget.querySelector('span') as HTMLElement
-                    if (icon) icon.style.color = 'var(--color-muted)'
-                    if (text) text.style.color = 'var(--color-muted)'
-                  }}
+                  className="flex items-center gap-3 text-sm text-muted hover:text-white font-inter transition-colors"
                 >
-                  <Mail
-                    size={16}
-                    style={{ color: 'var(--color-muted)', transition: 'color 0.2s ease', flexShrink: 0 }}
-                  />
-                  <span
-                    className="font-inter"
-                    style={{
-                      fontSize: 15,
-                      color: 'var(--color-muted)',
-                      transition: 'color 0.2s ease',
-                    }}
-                  >
-                    thalaimai360@gmail.com
-                  </span>
+                  <Mail size={16} className="text-red" />
+                  <span>thalaimai360@gmail.com</span>
                 </a>
+
+                <div className="flex items-center gap-3 text-xs text-muted font-inter pt-1">
+                  <Building2 size={16} className="text-red" />
+                  <span>Chennai · Madurai · Tamil Nadu, India</span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Right — Contact Form */}
-          <div>
+          {/* Right — Confidential Engagement Form */}
+          <div className="p-6 md:p-10 rounded border border-border bg-surface shadow-2xl relative">
+            <div className="mb-6 border-b border-border/60 pb-4 flex items-center justify-between">
+              <div>
+                <span className="text-xs text-red font-semibold uppercase tracking-widest font-inter block">
+                  Official Advisory Briefing
+                </span>
+                <h3 className="font-playfair text-2xl text-white font-semibold">
+                  Request Confidential Meeting
+                </h3>
+              </div>
+              <ShieldCheck className="text-red" size={24} />
+            </div>
+
             <AnimatePresence mode="wait">
               {!submitted ? (
                 <motion.form
                   key="form"
                   onSubmit={handleSubmit(onSubmit)}
-                  className="flex flex-col gap-5"
+                  className="space-y-4"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  {/* Name */}
                   <div>
-                    <label
-                      htmlFor="contact-name"
-                      className="font-inter block mb-2"
-                      style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}
-                    >
-                      Name / Representative Office
+                    <label htmlFor="contact-name" className="text-xs uppercase tracking-wider text-muted font-inter block mb-1.5">
+                      Name / Representative Office *
                     </label>
                     <input
                       id="contact-name"
                       type="text"
                       placeholder="E.g., Office of MLA, Madurai South"
                       className="form-field"
-                      {...register('name', { required: 'This field is required' })}
+                      {...register('name', { required: 'Representative Name is required' })}
                     />
-                    {errors.name && (
-                      <p className="font-inter mt-1" style={{ fontSize: 12, color: '#E57373' }}>
-                        {errors.name.message}
-                      </p>
-                    )}
+                    {errors.name && <p className="text-xs text-red mt-1 font-inter">{errors.name.message}</p>}
                   </div>
 
-                  {/* Email */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="contact-email" className="text-xs uppercase tracking-wider text-muted font-inter block mb-1.5">
+                        Official Email *
+                      </label>
+                      <input
+                        id="contact-email"
+                        type="email"
+                        placeholder="name@domain.com"
+                        className="form-field"
+                        {...register('email', {
+                          required: 'Email is required',
+                          pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Invalid email' },
+                        })}
+                      />
+                      {errors.email && <p className="text-xs text-red mt-1 font-inter">{errors.email.message}</p>}
+                    </div>
+
+                    <div>
+                      <label htmlFor="contact-phone" className="text-xs uppercase tracking-wider text-muted font-inter block mb-1.5">
+                        Direct Contact Phone *
+                      </label>
+                      <input
+                        id="contact-phone"
+                        type="tel"
+                        placeholder="+91 98765 43210"
+                        className="form-field"
+                        {...register('phone', { required: 'Phone number is required' })}
+                      />
+                      {errors.phone && <p className="text-xs text-red mt-1 font-inter">{errors.phone.message}</p>}
+                    </div>
+                  </div>
+
                   <div>
-                    <label
-                      htmlFor="contact-email"
-                      className="font-inter block mb-2"
-                      style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}
-                    >
-                      Official Email
+                    <label htmlFor="contact-jurisdiction" className="text-xs uppercase tracking-wider text-muted font-inter block mb-1.5">
+                      Elected Office / Jurisdiction Type
                     </label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      placeholder="name@domain.com"
-                      className="form-field"
-                      {...register('email', {
-                        required: 'Email is required',
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: 'Invalid email address',
-                        },
-                      })}
-                    />
-                    {errors.email && (
-                      <p className="font-inter mt-1" style={{ fontSize: 12, color: '#E57373' }}>
-                        {errors.email.message}
-                      </p>
-                    )}
+                    <select
+                      id="contact-jurisdiction"
+                      className="form-field bg-surface text-white"
+                      {...register('jurisdiction')}
+                    >
+                      <option value="State MLA">State MLA (Legislative Assembly)</option>
+                      <option value="Member of Parliament">Member of Parliament (MP)</option>
+                      <option value="Local Body / Corporation">Local Body / Municipal Council</option>
+                      <option value="Political Party Executive">Party Executive / Campaign Office</option>
+                    </select>
                   </div>
 
-                  {/* Phone */}
                   <div>
-                    <label
-                      htmlFor="contact-phone"
-                      className="font-inter block mb-2"
-                      style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}
-                    >
-                      Contact Number
-                    </label>
-                    <input
-                      id="contact-phone"
-                      type="tel"
-                      placeholder="E.g., +91 98765 43210"
-                      className="form-field"
-                      {...register('phone', { required: 'Phone number is required' })}
-                    />
-                    {errors.phone && (
-                      <p className="font-inter mt-1" style={{ fontSize: 12, color: '#E57373' }}>
-                        {errors.phone.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Requirements */}
-                  <div>
-                    <label
-                      htmlFor="contact-requirements"
-                      className="font-inter block mb-2"
-                      style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}
-                    >
-                      Consultation Requirements
+                    <label htmlFor="contact-requirements" className="text-xs uppercase tracking-wider text-muted font-inter block mb-1.5">
+                      Advisory Requirements & Scope *
                     </label>
                     <textarea
                       id="contact-requirements"
-                      placeholder="Describe the leadership or constituency mapping services required..."
-                      className="form-field resize-none"
-                      style={{ minHeight: 120 }}
-                      {...register('requirements', { required: 'Please describe your requirements' })}
+                      placeholder="Describe the leadership coaching, constituency mapping, or grievance workflow support required..."
+                      className="form-field resize-none min-h-[110px]"
+                      {...register('requirements', { required: 'Please state your requirements' })}
                     />
-                    {errors.requirements && (
-                      <p className="font-inter mt-1" style={{ fontSize: 12, color: '#E57373' }}>
-                        {errors.requirements.message}
-                      </p>
-                    )}
+                    {errors.requirements && <p className="text-xs text-red mt-1 font-inter">{errors.requirements.message}</p>}
                   </div>
 
-                  {/* Submit */}
                   <button
                     type="submit"
-                    id="contact-submit"
-                    className="btn-submit"
                     disabled={loading}
-                    style={{
-                      opacity: loading ? 0.7 : 1,
-                      transition: 'background 0.2s ease, opacity 0.2s ease',
-                    }}
+                    className="btn-submit flex items-center justify-center gap-2 mt-2"
                   >
-                    {loading ? 'Sending...' : 'Request Consultation'}
+                    {loading ? 'Transmitting Request...' : 'Schedule Confidential Consultation'}
                   </button>
 
-                  {/* Secondary Link */}
-                  <div className="text-center">
-                    <a
-                      href="mailto:thalaimai360@gmail.com?subject=Corporate Profile Request"
-                      className="font-inter"
-                      style={{
-                        fontSize: 13,
-                        color: 'var(--color-gold)',
-                        textDecoration: 'none',
-                        borderBottom: '1px solid transparent',
-                        transition: 'border-color 0.2s ease',
-                        paddingBottom: 1,
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.borderBottomColor = 'var(--color-gold)')}
-                      onMouseLeave={(e) => (e.currentTarget.style.borderBottomColor = 'transparent')}
-                    >
-                      Request Corporate Profile →
-                    </a>
-                  </div>
+                  <p className="text-[11px] text-center text-muted font-inter pt-2">
+                    🔒 All submissions are encrypted and handled personally by the Founder.
+                  </p>
                 </motion.form>
               ) : (
-                /* Success State */
                 <motion.div
                   key="success"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex flex-col items-center justify-center text-center gap-6 py-16"
+                  className="flex flex-col items-center justify-center text-center space-y-4 py-12"
                 >
-                  <CheckCircle2
-                    size={48}
-                    style={{ color: 'var(--color-gold)' }}
-                  />
-                  <h3
-                    className="font-playfair"
-                    style={{ fontSize: 24, color: 'var(--color-white)' }}
-                  >
-                    Your request has been received.
-                  </h3>
-                  <p
-                    className="font-inter"
-                    style={{ fontSize: 15, color: 'var(--color-muted)' }}
-                  >
-                    We will contact you within 24 hours.
+                  <CheckCircle2 size={48} className="text-red" />
+                  <h4 className="font-playfair text-2xl text-white">Your Confidential Request Has Been Received</h4>
+                  <p className="text-sm text-muted font-inter max-w-sm">
+                    Our Executive Office will contact your representative directly within 24 hours.
                   </p>
                 </motion.div>
               )}

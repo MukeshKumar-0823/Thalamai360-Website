@@ -1,7 +1,9 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { GoldRule } from './AnimationUtils'
+import Image from 'next/image'
+import { ShieldCheck, Award, ArrowUpRight, ChevronRight } from 'lucide-react'
 
 const staggerContainer = {
   hidden: {},
@@ -21,16 +23,63 @@ const staggerItem = {
   },
 }
 
+// Simple Counter Component
+function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    let start = 0
+    const duration = 1800
+    const increment = end / (duration / 16)
+    const timer = setInterval(() => {
+      start += increment
+      if (start >= end) {
+        setCount(end)
+        clearInterval(timer)
+      } else {
+        setCount(Math.floor(start))
+      }
+    }, 16)
+    return () => clearInterval(timer)
+  }, [end])
+
+  return (
+    <span>
+      {count.toLocaleString()}{suffix}
+    </span>
+  )
+}
+
 export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center"
-      style={{ paddingTop: 100, paddingBottom: 80 }}
+      className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-black text-white"
+      style={{ paddingTop: 120, paddingBottom: 60 }}
     >
-      {/* Background grain texture (via CSS class in globals) */}
-      <div className="section-container w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-12 lg:gap-20 items-center">
+      {/* Background Secretariat Image Texture with Dark Vignette */}
+      <div className="absolute inset-0 z-0 opacity-15 pointer-events-none">
+        <Image
+          src="/secretariat.jpg"
+          alt="Chief Secretariat Background"
+          fill
+          className="object-cover object-center filter grayscale contrast-125"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/90" />
+      </div>
+
+      {/* Guilloché Line Grid Overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, #D44535 1px, transparent 1px), linear-gradient(to bottom, #D44535 1px, transparent 1px)`,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      <div className="section-container w-full relative z-10 my-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-[58fr_42fr] gap-12 lg:gap-16 items-center">
           
           {/* Left Column */}
           <motion.div
@@ -39,50 +88,26 @@ export default function HeroSection() {
             animate="visible"
             className="flex flex-col"
           >
-            {/* Eyebrow */}
-            <motion.p variants={staggerItem} className="eyebrow mb-4">
-              INSTITUTIONAL MANDATE
-            </motion.p>
-
-            {/* Gold Rule */}
-            <motion.div variants={staggerItem} className="mb-6">
-              <div
-                style={{
-                  height: 1,
-                  background: 'var(--color-gold-dim)',
-                  transformOrigin: 'left',
-                  width: '100%',
-                }}
-              />
+            {/* Institutional Badge */}
+            <motion.div variants={staggerItem} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-red/30 bg-red/10 w-max mb-6">
+              <Award size={14} className="text-red" />
+              <span className="text-xs uppercase tracking-widest text-red font-inter font-semibold">
+                Sovereign & Political Governance Advisory
+              </span>
             </motion.div>
 
             {/* Tamil Quote */}
             <motion.p
               variants={staggerItem}
-              className="font-tamil"
-              style={{
-                fontSize: 17,
-                color: 'var(--color-gold-dim)',
-                fontStyle: 'italic',
-                marginBottom: 32,
-                lineHeight: 1.6,
-              }}
+              className="font-tamil text-lg md:text-xl text-red-dim italic mb-4 font-normal"
             >
               அரசியல் பிழைத்தோர்க்கு அறம் கூற்றாகும்
             </motion.p>
 
-            {/* H1 */}
+            {/* Main H1 */}
             <motion.h1
               variants={staggerItem}
-              className="font-playfair hero-h1"
-              style={{
-                fontSize: 'clamp(38px, 4.5vw, 58px)',
-                fontWeight: 700,
-                color: 'var(--color-white)',
-                lineHeight: 1.15,
-                letterSpacing: '-0.02em',
-                marginBottom: 28,
-              }}
+              className="font-playfair hero-h1 text-4xl md:text-6xl lg:text-6xl font-bold text-white leading-[1.12] tracking-tight mb-6"
             >
               Transforming Electoral Mandates into Measurable Public Impact
             </motion.h1>
@@ -90,12 +115,7 @@ export default function HeroSection() {
             {/* Body */}
             <motion.p
               variants={staggerItem}
-              style={{
-                fontSize: 18,
-                color: 'var(--color-muted)',
-                lineHeight: 1.8,
-                marginBottom: 40,
-              }}
+              className="font-inter text-base md:text-lg text-muted leading-relaxed mb-8 max-w-2xl"
             >
               Thalaimai 360 is a trusted partner to elected representatives, enabling them to
               strengthen public trust, enhance governance effectiveness, and drive constituency
@@ -103,123 +123,109 @@ export default function HeroSection() {
             </motion.p>
 
             {/* CTAs */}
-            <motion.div variants={staggerItem} className="flex flex-wrap gap-4">
+            <motion.div variants={staggerItem} className="flex flex-wrap items-center gap-4">
               <a
                 href="#services"
-                className="btn-primary"
+                className="btn-primary flex items-center gap-2"
                 onClick={(e) => {
                   e.preventDefault()
                   document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
-                Explore Services
+                Explore Capabilities <ChevronRight size={16} />
               </a>
               <a
                 href="#contact"
-                className="btn-ghost"
+                className="btn-ghost flex items-center gap-2"
                 onClick={(e) => {
                   e.preventDefault()
                   document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
-                Contact Us
+                Request Confidential Briefing
               </a>
             </motion.div>
           </motion.div>
 
-          {/* Right Column — Visual */}
-          <div className="relative hidden lg:flex flex-col items-center justify-center min-h-[480px]">
-            {/* Ambient 360 */}
-            <div
-              className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
-              aria-hidden="true"
-            >
-              <span
-                className="font-playfair"
-                style={{
-                  fontSize: 'clamp(180px, 22vw, 320px)',
-                  fontWeight: 700,
-                  color: 'rgba(201,168,76,0.06)',
-                  lineHeight: 1,
-                  letterSpacing: '-0.04em',
-                  userSelect: 'none',
-                }}
-              >
-                360
-              </span>
-            </div>
-
-            {/* Stat Cards */}
-            <div className="relative z-10 flex flex-col gap-4 w-full max-w-sm">
-              {[
-                {
-                  stat: '1,10,000+',
-                  label: 'Elected Representatives in Tamil Nadu',
-                  delay: 0.3,
-                },
-                {
-                  stat: 'ZERO',
-                  label: 'Structured Governance Training Programs',
-                  delay: 0.45,
-                },
-                {
-                  stat: '12',
-                  label: 'Core Capability Domains',
-                  delay: 0.6,
-                },
-              ].map(({ stat, label, delay }) => (
-                <motion.div
-                  key={stat}
-                  className="stat-card"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <div
-                    className="font-playfair"
-                    style={{
-                      fontSize: 28,
-                      fontWeight: 700,
-                      color: 'var(--color-gold)',
-                      marginBottom: 6,
-                    }}
-                  >
-                    {stat}
-                  </div>
-                  <div
-                    className="font-inter"
-                    style={{
-                      fontSize: 13,
-                      color: 'var(--color-muted)',
-                      lineHeight: 1.5,
-                      letterSpacing: '0.01em',
-                    }}
-                  >
-                    {label}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Stat Cards */}
-        <div className="flex flex-col gap-3 mt-12 lg:hidden">
-          {[
-            { stat: '1,10,000+', label: 'Elected Representatives in Tamil Nadu' },
-            { stat: 'ZERO', label: 'Structured Governance Training Programs' },
-            { stat: '12', label: 'Core Capability Domains' },
-          ].map(({ stat, label }) => (
-            <div key={stat} className="stat-card">
-              <div
-                className="font-playfair"
-                style={{ fontSize: 24, fontWeight: 700, color: 'var(--color-gold)', marginBottom: 4 }}
-              >
-                {stat}
+          {/* Right Column — Institutional Live Metrics Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="relative flex flex-col gap-4 p-6 md:p-8 rounded border border-border bg-surface/90 backdrop-blur-xl shadow-2xl"
+            style={{
+              boxShadow: '0 30px 70px rgba(0,0,0,0.8), 0 0 30px rgba(212,69,53,0.1)',
+            }}
+          >
+            <div className="flex items-center justify-between border-b border-border/60 pb-4 mb-2">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-red animate-pulse" />
+                <span className="text-xs uppercase tracking-widest text-white font-inter font-semibold">
+                  Tamil Nadu Governance Scope
+                </span>
               </div>
-              <div style={{ fontSize: 13, color: 'var(--color-muted)' }}>{label}</div>
+              <span className="text-[11px] text-muted font-mono">EST. 2026</span>
             </div>
-          ))}
+
+            {/* Stat Item 1 */}
+            <div className="p-4 rounded border border-border/50 bg-black/40">
+              <div className="text-3xl md:text-4xl font-playfair font-bold text-red mb-1">
+                <AnimatedCounter end={110000} suffix="+" />
+              </div>
+              <div className="text-xs uppercase tracking-wider text-muted font-inter">
+                Elected Representatives in Tamil Nadu
+              </div>
+            </div>
+
+            {/* Stat Item 2 */}
+            <div className="p-4 rounded border border-border/50 bg-black/40">
+              <div className="text-3xl md:text-4xl font-playfair font-bold text-white mb-1">
+                ZERO
+              </div>
+              <div className="text-xs uppercase tracking-wider text-muted font-inter">
+                Structured Governance Training Programs (Prior to T360)
+              </div>
+            </div>
+
+            {/* Stat Item 3 */}
+            <div className="p-4 rounded border border-border/50 bg-black/40">
+              <div className="text-3xl md:text-4xl font-playfair font-bold text-red mb-1">
+                <AnimatedCounter end={12} />
+              </div>
+              <div className="text-xs uppercase tracking-wider text-muted font-inter">
+                Core Capability Advisory Domains
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center gap-2 text-xs text-muted font-inter">
+              <ShieldCheck size={14} className="text-red" />
+              <span>Full Neutrality & Strict Political Confidentiality Ensured</span>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Live Governance Ticker at Bottom */}
+      <div className="w-full border-t border-border bg-surface/50 py-3 relative z-10 overflow-hidden hidden sm:block">
+        <div className="section-container flex items-center justify-between text-xs font-inter text-muted tracking-wider uppercase">
+          <div className="flex items-center gap-6">
+            <span className="text-red font-semibold">Live Mandate Scope:</span>
+            <span>234 Assembly Constituencies</span>
+            <span>·</span>
+            <span>39 Parliamentary Constituencies</span>
+            <span>·</span>
+            <span>21 Municipal Corporations</span>
+          </div>
+          <a
+            href="#contact"
+            className="text-white hover:text-red transition-colors font-medium flex items-center gap-1"
+            onClick={(e) => {
+              e.preventDefault()
+              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
+            }}
+          >
+            Schedule Consultation <ArrowUpRight size={12} />
+          </a>
         </div>
       </div>
     </section>

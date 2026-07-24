@@ -7,6 +7,7 @@ import SplitDoor from '@/components/SplitDoor'
 import Navbar from '@/components/Navbar'
 import HeroSection from '@/components/HeroSection'
 import ServicesSection from '@/components/ServicesSection'
+import DiagnosticConsole from '@/components/DiagnosticConsole'
 import ApproachSection from '@/components/ApproachSection'
 import PartnershipsSection from '@/components/PartnershipsSection'
 import ContactSection from '@/components/ContactSection'
@@ -61,6 +62,7 @@ export default function Home() {
               <main id="main-content">
                 <HeroSection />
                 <ServicesSection />
+                <DiagnosticConsole />
                 <ApproachSection />
                 <PartnershipsSection />
                 <ContactSection />

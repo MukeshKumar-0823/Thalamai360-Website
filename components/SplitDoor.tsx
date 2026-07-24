@@ -10,16 +10,22 @@ interface SplitDoorProps {
 
 export default function SplitDoor({ onReveal }: SplitDoorProps) {
   const [clicked, setClicked] = useState(false)
+  const [showSecretariat, setShowSecretariat] = useState(false)
 
   const handleClick = () => {
     if (clicked) return
     setClicked(true)
-    setTimeout(onReveal, 750)
+    setShowSecretariat(true)
+
+    // Door slides open (0.6s), image reveals for 1.2s total (reduced by 1 sec), then seamlessly transitions to main site
+    setTimeout(() => {
+      onReveal()
+    }, 1200)
   }
 
   return (
     <div
-      className="fixed inset-0 z-[500] overflow-hidden flex"
+      className="fixed inset-0 z-[500] overflow-hidden"
       onClick={handleClick}
       role="button"
       tabIndex={0}
@@ -27,9 +33,41 @@ export default function SplitDoor({ onReveal }: SplitDoorProps) {
       onKeyDown={(e) => e.key === 'Enter' && handleClick()}
       style={{ cursor: 'pointer', background: '#090F1F' }}
     >
+      {/* ══ SECRETARIAT REVEAL BACKDROP (Pure Image — Fast 1.2s Transition) ══ */}
+      {showSecretariat && (
+        <motion.div
+          className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={clicked ? { opacity: [0, 1, 1, 0], scale: 1.0 } : { opacity: 0 }}
+          transition={{
+            opacity: { times: [0, 0.2, 0.75, 1], duration: 1.2, ease: 'easeInOut' },
+            scale: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+          }}
+        >
+          {/* Background image */}
+          <div className="absolute inset-0 w-full h-full">
+            <Image
+              src="/secretariat.jpg"
+              alt="Chief Secretariat Tamil Nadu"
+              fill
+              className="object-cover object-center"
+              priority
+            />
+            {/* Subtle atmospheric vignette for cinematic depth */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'radial-gradient(circle at center, rgba(9, 15, 31, 0.1) 0%, rgba(9, 15, 31, 0.45) 100%)',
+              }}
+            />
+          </div>
+        </motion.div>
+      )}
+
       {/* ══ LEFT PANEL ══ */}
       <motion.div
-        className="relative flex flex-col items-end justify-center overflow-hidden"
+        className="absolute top-0 left-0 flex flex-col items-end justify-center overflow-hidden z-10"
         style={{
           width: '50%',
           height: '100vh',
@@ -39,7 +77,7 @@ export default function SplitDoor({ onReveal }: SplitDoorProps) {
           paddingLeft: 48,
         }}
         animate={clicked ? { x: '-100%' } : { x: 0 }}
-        transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
       >
         {/* Corner TL */}
         <svg className="absolute top-5 left-5" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -51,7 +89,7 @@ export default function SplitDoor({ onReveal }: SplitDoorProps) {
         </svg>
 
         <div className="flex flex-col items-end text-right gap-5">
-          {/* ✅ Tamil brand — தலைமை 360 on ONE line */}
+          {/* Tamil brand — தலைமை 360 */}
           <h2
             className="font-tamil"
             style={{
@@ -90,11 +128,11 @@ export default function SplitDoor({ onReveal }: SplitDoorProps) {
         </div>
       </motion.div>
 
-      {/* ══ CENTER LOGO — above both panels ══ */}
+      {/* ══ CENTER LOGO — above door panels ══ */}
       <motion.div
         className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none select-none"
         animate={clicked ? { opacity: 0, scale: 0.88 } : { opacity: 1, scale: 1 }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
+        transition={{ duration: 0.25, ease: 'easeOut' }}
       >
         {/* Logo box */}
         <div
@@ -135,7 +173,7 @@ export default function SplitDoor({ onReveal }: SplitDoorProps) {
 
       {/* ══ RIGHT PANEL ══ */}
       <motion.div
-        className="relative flex flex-col items-start justify-center overflow-hidden"
+        className="absolute top-0 right-0 flex flex-col items-start justify-center overflow-hidden z-10"
         style={{
           width: '50%',
           height: '100vh',
@@ -145,7 +183,7 @@ export default function SplitDoor({ onReveal }: SplitDoorProps) {
           paddingRight: 48,
         }}
         animate={clicked ? { x: '100%' } : { x: 0 }}
-        transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
       >
         {/* Corner TR */}
         <svg className="absolute top-5 right-5" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -157,7 +195,7 @@ export default function SplitDoor({ onReveal }: SplitDoorProps) {
         </svg>
 
         <div className="flex flex-col items-start gap-5">
-          {/* ✅ English brand — THALAIMAI 360 on ONE line */}
+          {/* English brand — THALAIMAI 360 */}
           <h2
             className="font-playfair"
             style={{

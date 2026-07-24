@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Full navy background circle -->
+  <circle cx="100" cy="100" r="96" fill="#1C3461"/>
+
+  <!-- White inner circle (upper region) -->
+  <ellipse cx="100" cy="90" rx="62" ry="64" fill="white"/>
+
+  <!-- Left red wing — trapezoid pointing inward -->
+  <polygon points="22,110 76,92 76,122 22,138" fill="#D44535"/>
+
+  <!-- Right red wing — trapezoid pointing inward (mirror) -->
+  <polygon points="178,110 124,92 124,122 178,138" fill="#D44535"/>
+
+  <!-- Navy lower wave — covers bottom of white ellipse -->
+  <path d="M 38 128 Q 68 158 100 152 Q 132 158 162 128 Q 148 170 100 172 Q 52 170 38 128 Z" fill="#1C3461"/>
+
+  <!-- Navy wave crest — smooth S-curve across middle -->
+  <path d="M 22 120 Q 55 148 100 140 Q 145 148 178 120 L 178 132 Q 145 162 100 154 Q 55 162 22 132 Z" fill="#1C3461"/>
+</svg>

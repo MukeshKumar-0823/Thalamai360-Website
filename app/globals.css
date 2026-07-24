@@ -1,0 +1,296 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== CSS Custom Properties — Logo Color Palette ===== */
+/* 3 Colors from logo: Navy #1C3461 · Red #D44535 · White #FFFFFF */
+:root {
+  --color-black:       #090F1F;   /* Deep navy-black background */
+  --color-surface:     #0F1A33;   /* Navy card/section surfaces */
+  --color-surface-2:   #162040;   /* Elevated navy surfaces */
+  --color-red:         #D44535;   /* Primary accent — logo red */
+  --color-red-light:   #E86050;   /* Hover/highlight red */
+  --color-red-dim:     #7A261C;   /* Subtle red tint */
+  --color-navy:        #1C3461;   /* Logo navy blue */
+  --color-navy-light:  #2A4A80;   /* Lighter navy */
+  --color-white:       #F0F4FF;   /* Cool off-white text */
+  --color-muted:       #7A92B8;   /* Blue-muted secondary text */
+  --color-border:      #1E3468;   /* Navy hairline borders */
+  --color-border-red:  #3A1810;   /* Red-tinted borders */
+
+  /* Backward-compat aliases so components still work */
+  --color-gold:        #D44535;
+  --color-gold-light:  #E86050;
+  --color-gold-dim:    #7A261C;
+}
+
+/* ===== Base Reset ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-inter), 'Helvetica Neue', sans-serif;
+  overflow-x: hidden;
+}
+
+a, button, [role="button"] {
+  cursor: pointer;
+}
+
+/* ===== Typography Base ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), Georgia, serif;
+  color: var(--color-white);
+}
+
+p {
+  color: var(--color-muted);
+  line-height: 1.75;
+}
+
+/* ===== Tamil Font Class ===== */
+.font-tamil {
+  font-family: var(--font-tamil), serif;
+}
+
+/* ===== Gold Rule (now Red Rule) ===== */
+.gold-rule {
+  height: 1px;
+  background: var(--color-red-dim);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.gold-rule.animate {
+  transform: scaleX(1);
+}
+
+/* ===== Custom Cursor ===== */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--color-red);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  mix-blend-mode: difference;
+}
+.custom-cursor.expanded {
+  width: 32px;
+  height: 32px;
+  background: rgba(212, 69, 53, 0.2);
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-black); }
+::-webkit-scrollbar-thumb { background: var(--color-navy); border-radius: 2px; }
+
+/* ===== Lenis ===== */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto; }
+
+/* ===== Selection ===== */
+::selection {
+  background: rgba(212, 69, 53, 0.3);
+  color: var(--color-white);
+}
+
+/* ===== Grain Texture ===== */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23grain)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* ===== Layout ===== */
+.section-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+@media (max-width: 1024px) { .section-container { padding: 0 48px; } }
+@media (max-width: 768px)  { .section-container { padding: 0 24px; } }
+
+/* ===== Eyebrow ===== */
+.eyebrow {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-red);
+}
+
+/* ===== Service Grid Border ===== */
+.service-grid {
+  background: var(--color-border);
+  gap: 1px;
+}
+
+/* ===== Nav ===== */
+.nav-scrolled {
+  background: rgba(9, 15, 31, 0.94) !important;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ===== Horizontal Scroll ===== */
+.horizontal-scroll-track {
+  display: flex;
+  will-change: transform;
+}
+
+/* ===== Stat Card ===== */
+.stat-card {
+  background: rgba(28, 52, 97, 0.15);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(8px);
+  border-radius: 4px;
+  padding: 24px 28px;
+}
+
+/* ===== Pull Quote ===== */
+.pull-quote {
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-red);
+  padding: 48px 64px;
+}
+@media (max-width: 768px) { .pull-quote { padding: 32px 24px; } }
+
+/* ===== Form Fields ===== */
+.form-field {
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  padding: 14px 16px;
+  color: var(--color-white);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 15px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+.form-field::placeholder { color: var(--color-muted); }
+.form-field:focus {
+  border-color: var(--color-red);
+  box-shadow: 0 0 0 3px rgba(212, 69, 53, 0.1);
+}
+
+/* ===== Buttons ===== */
+.btn-primary {
+  background: var(--color-red);
+  color: #fff;
+  border: none;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-primary:hover { background: var(--color-red-light); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-red);
+  border: 1px solid var(--color-red);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-ghost:hover { background: rgba(212, 69, 53, 0.1); }
+
+.btn-submit {
+  width: 100%;
+  background: var(--color-red);
+  color: #fff;
+  border: none;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 16px;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.btn-submit:hover { background: var(--color-red-light); }
+
+/* ===== Preloader ===== */
+.preloader-line {
+  height: 1px;
+  background: var(--color-red);
+  transform-origin: left;
+}
+
+/* ===== Door Panels ===== */
+.door-panel {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  background: var(--color-black);
+  z-index: 500;
+}
+
+/* ===== Nav hover gold → now red alias ===== */
+.nav-link-hover:hover { color: var(--color-red) !important; }
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== Mobile Typography ===== */
+@media (max-width: 768px) {
+  .hero-h1  { font-size: clamp(32px, 8vw, 48px) !important; }
+  .section-title { font-size: clamp(28px, 7vw, 40px) !important; }
+}
+
+/* ===== Pulse animation ===== */
+@keyframes pulseRed {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+.animate-pulse-red {
+  animation: pulseRed 2s ease-in-out infinite;
+}

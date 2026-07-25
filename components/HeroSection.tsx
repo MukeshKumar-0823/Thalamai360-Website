@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { ShieldCheck, Award, ArrowUpRight, ChevronRight } from 'lucide-react'
+import { ShieldCheck, Award, ChevronRight, ArrowUpRight } from 'lucide-react'
 
 const staggerContainer = {
   hidden: {},
@@ -23,7 +23,6 @@ const staggerItem = {
   },
 }
 
-// Simple Counter Component
 function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
   const [count, setCount] = useState(0)
 
@@ -54,10 +53,14 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-black text-white"
-      style={{ paddingTop: 120, paddingBottom: 60 }}
+      className="relative min-h-screen flex flex-col justify-between overflow-hidden text-white"
+      style={{
+        background: 'linear-gradient(135deg, #090F1F 0%, #0D1A32 100%)',
+        paddingTop: 130,
+        paddingBottom: 60,
+      }}
     >
-      {/* Background Secretariat Image Texture with Dark Vignette */}
+      {/* Background Secretariat Image Texture */}
       <div className="absolute inset-0 z-0 opacity-15 pointer-events-none">
         <Image
           src="/secretariat.jpg"
@@ -66,17 +69,16 @@ export default function HeroSection() {
           className="object-cover object-center filter grayscale contrast-125"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/90" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#090F1F] via-[#090F1F]/80 to-[#090F1F]/90" />
       </div>
 
-      {/* Guilloché Line Grid Overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(to right, #D44535 1px, transparent 1px), linear-gradient(to bottom, #D44535 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }}
-      />
+      {/* Signature Corner Brackets (Matching Landing Door Aesthetics) */}
+      <svg className="absolute top-20 left-8 z-10 hidden md:block" width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M0 32 L0 0 L32 0" stroke="rgba(28,52,97,0.7)" strokeWidth="2" fill="none"/>
+      </svg>
+      <svg className="absolute top-20 right-8 z-10 hidden md:block" width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M32 32 L32 0 L0 0" stroke="rgba(28,52,97,0.7)" strokeWidth="2" fill="none"/>
+      </svg>
 
       <div className="section-container w-full relative z-10 my-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[58fr_42fr] gap-12 lg:gap-16 items-center">
@@ -89,7 +91,7 @@ export default function HeroSection() {
             className="flex flex-col"
           >
             {/* Institutional Badge */}
-            <motion.div variants={staggerItem} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-red/30 bg-red/10 w-max mb-6">
+            <motion.div variants={staggerItem} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red/40 bg-red/10 w-max mb-6">
               <Award size={14} className="text-red" />
               <span className="text-xs uppercase tracking-widest text-red font-inter font-semibold">
                 Sovereign & Political Governance Advisory
@@ -99,15 +101,18 @@ export default function HeroSection() {
             {/* Tamil Quote */}
             <motion.p
               variants={staggerItem}
-              className="font-tamil text-lg md:text-xl text-red-dim italic mb-4 font-normal"
+              className="font-tamil text-lg md:text-xl text-red-dim italic mb-3 font-normal"
             >
               அரசியல் பிழைத்தோர்க்கு அறம் கூற்றாகும்
             </motion.p>
 
+            {/* Red Hairline Rule */}
+            <motion.div variants={staggerItem} className="w-12 h-[2px] bg-red mb-6" />
+
             {/* Main H1 */}
             <motion.h1
               variants={staggerItem}
-              className="font-playfair hero-h1 text-4xl md:text-6xl lg:text-6xl font-bold text-white leading-[1.12] tracking-tight mb-6"
+              className="font-playfair hero-h1 text-4xl md:text-6xl font-bold text-white leading-[1.12] tracking-tight mb-6"
             >
               Transforming Electoral Mandates into Measurable Public Impact
             </motion.h1>
@@ -147,16 +152,25 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column — Institutional Live Metrics Card */}
+          {/* Right Column — Corner-Framed Executive Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="relative flex flex-col gap-4 p-6 md:p-8 rounded border border-border bg-surface/90 backdrop-blur-xl shadow-2xl"
+            className="relative flex flex-col gap-4 p-6 md:p-8 rounded border border-border bg-surface/90 backdrop-blur-xl shadow-2xl overflow-hidden"
             style={{
-              boxShadow: '0 30px 70px rgba(0,0,0,0.8), 0 0 30px rgba(212,69,53,0.1)',
+              boxShadow: '0 30px 70px rgba(0,0,0,0.8), 0 0 30px rgba(212,69,53,0.15)',
+              background: 'linear-gradient(145deg, #0F1A33 0%, #090F1F 100%)',
             }}
           >
+            {/* Card Corner SVG Brackets */}
+            <svg className="absolute top-3 left-3" width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <path d="M0 32 L0 0 L32 0" stroke="rgba(212,69,53,0.6)" strokeWidth="2" fill="none"/>
+            </svg>
+            <svg className="absolute top-3 right-3" width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <path d="M32 32 L32 0 L0 0" stroke="rgba(212,69,53,0.6)" strokeWidth="2" fill="none"/>
+            </svg>
+
             <div className="flex items-center justify-between border-b border-border/60 pb-4 mb-2">
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-red animate-pulse" />
@@ -168,7 +182,7 @@ export default function HeroSection() {
             </div>
 
             {/* Stat Item 1 */}
-            <div className="p-4 rounded border border-border/50 bg-black/40">
+            <div className="p-4 rounded border border-border/60 bg-black/40">
               <div className="text-3xl md:text-4xl font-playfair font-bold text-red mb-1">
                 <AnimatedCounter end={110000} suffix="+" />
               </div>
@@ -178,7 +192,7 @@ export default function HeroSection() {
             </div>
 
             {/* Stat Item 2 */}
-            <div className="p-4 rounded border border-border/50 bg-black/40">
+            <div className="p-4 rounded border border-border/60 bg-black/40">
               <div className="text-3xl md:text-4xl font-playfair font-bold text-white mb-1">
                 ZERO
               </div>
@@ -188,7 +202,7 @@ export default function HeroSection() {
             </div>
 
             {/* Stat Item 3 */}
-            <div className="p-4 rounded border border-border/50 bg-black/40">
+            <div className="p-4 rounded border border-border/60 bg-black/40">
               <div className="text-3xl md:text-4xl font-playfair font-bold text-red mb-1">
                 <AnimatedCounter end={12} />
               </div>
@@ -206,7 +220,7 @@ export default function HeroSection() {
       </div>
 
       {/* Live Governance Ticker at Bottom */}
-      <div className="w-full border-t border-border bg-surface/50 py-3 relative z-10 overflow-hidden hidden sm:block">
+      <div className="w-full border-t border-border bg-[#090F1F]/90 py-3 relative z-10 overflow-hidden hidden sm:block">
         <div className="section-container flex items-center justify-between text-xs font-inter text-muted tracking-wider uppercase">
           <div className="flex items-center gap-6">
             <span className="text-red font-semibold">Live Mandate Scope:</span>

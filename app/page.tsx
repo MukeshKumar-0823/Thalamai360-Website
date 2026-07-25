@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Preloader from '@/components/Preloader'
-import SplitDoor from '@/components/SplitDoor'
+import DoorEntrance from '@/components/DoorEntrance'
 import Navbar from '@/components/Navbar'
 import HeroSection from '@/components/HeroSection'
 import ServicesSection from '@/components/ServicesSection'
@@ -42,14 +42,14 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* Split Door Intro */}
+      {/* 3D Secretariat Gate Entrance (Harish Branch Design) */}
       <AnimatePresence>
         {appState === 'door' && (
-          <SplitDoor onReveal={handleReveal} />
+          <DoorEntrance onComplete={handleReveal} />
         )}
       </AnimatePresence>
 
-      {/* Main Site */}
+      {/* Main Ultra-Premium Site */}
       <AnimatePresence>
         {appState === 'revealed' && (
           <motion.div

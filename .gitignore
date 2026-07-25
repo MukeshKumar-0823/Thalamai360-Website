@@ -14,3 +14,13 @@ desktop.ini
 # Python cache (from local dev server)
 __pycache__/
 *.pyc
+
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
+
+# Vite
+.vite/
+

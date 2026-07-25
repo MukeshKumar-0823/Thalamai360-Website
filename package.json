@@ -1,0 +1,22 @@
+{
+  "name": "thalamai360-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tamil Nadu's Premier Political Governance & Constituency Management Consultancy",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "^7.0.2",
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}
